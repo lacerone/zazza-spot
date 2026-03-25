@@ -2,16 +2,15 @@
 
 import { useState } from 'react'
 import { supabase } from '@/lib/supabase'
-import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
 export default function Register() {
-  const router = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [username, setUsername] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [sent, setSent] = useState(false)
 
   const handleRegister = async (e) => {
     e.preventDefault()
@@ -30,8 +29,25 @@ export default function Register() {
       setError(error.message)
       setLoading(false)
     } else {
-      router.push('/')
+      setSent(true)
     }
+  }
+
+  if (sent) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center px-4">
+        <div className="bg-zinc-900 rounded-2xl p-8 w-full max-w-md text-center">
+          <div className="text-5xl mb-4">📬</div>
+          <h2 className="text-white text-2xl font-bold mb-2">Controlla la mail!</h2>
+          <p className="text-zinc-400 mb-6">
+            Abbiamo inviato un link di conferma a <span className="text-white">{email}</span>. Clicca sul link per attivare il tuo account.
+          </p>
+          <Link href="/login" className="text-zinc-400 hover:text-white text-sm hover:underline">
+            Torna al login
+          </Link>
+        </div>
+      </div>
+    )
   }
 
   return (

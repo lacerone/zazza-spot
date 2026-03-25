@@ -30,6 +30,7 @@ export default function Home() {
           {user ? (
             <>
               <span className="text-zinc-400">Ciao, {user.user_metadata?.username}</span>
+              <a href="/admin" className="text-zinc-400 hover:text-white text-sm">Admin</a>
               <button onClick={handleLogout} className="hover:underline">Esci</button>
             </>
           ) : (
@@ -40,8 +41,8 @@ export default function Home() {
           )}
         </nav>
       </header>
-      <div className="flex-1">
-        <Map />
+      <div className="flex-1 relative">
+        <Map user={user} />
       </div>
     </main>
   )
