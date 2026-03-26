@@ -10,7 +10,8 @@ const CAMPI_CORREGGIBILI = [
   { key: 'category', label: 'Categoria', type: 'select', options: ['Bar', 'Panorama', 'Street', 'Parco', 'Skate', 'Altro'] },
   { key: 'police_level', label: 'Livello presidiato (1-10)', type: 'number' },
   { key: 'has_fountain', label: 'Fontanella', type: 'boolean' },
-  { key: 'has_space', label: 'Spazio', type: 'boolean' },
+  { key: 'space_capacity', label: 'Capienza max', type: 'number' },
+  { key: 'space_type', label: 'Tipo di spazio', type: 'select', options: ['seduto', 'prato', 'muretto', 'panchina', 'altro'] },
   { key: 'is_lit', label: 'Illuminato', type: 'boolean' },
   { key: 'is_covered', label: 'Coperto', type: 'boolean' },
 ]
@@ -110,15 +111,24 @@ export default function CorrectionForm({ spot, user, onSaved }) {
           )}
 
           {fieldConfig?.type === 'number' && (
-            <input
-              type="number"
-              min={1}
-              max={10}
-              value={newValue}
-              onChange={e => setNewValue(e.target.value)}
-              className="w-full bg-zinc-800 text-white rounded-lg px-4 py-3 outline-none focus:ring-2 focus:ring-white/20 text-sm"
-              required
-            />
+            <div className="flex gap-2">
+              <input
+                type="number"
+                min={1}
+                value={newValue !== 'inf' ? newValue : ''}
+                onChange={e => setNewValue(e.target.value)}
+                className="flex-1 bg-zinc-800 text-white rounded-lg px-4 py-3 outline-none focus:ring-2 focus:ring-white/20 text-sm"
+              />
+              {selectedField === 'space_capacity' && (
+                <button
+                  type="button"
+                  onClick={() => setNewValue('inf')}
+                  className={`px-4 py-3 rounded-lg font-medium transition text-sm ${newValue === 'inf' ? 'bg-white text-black' : 'bg-zinc-800 text-zinc-400'}`}
+                >
+                  ∞
+                </button>
+              )}
+            </div>
           )}
 
           {fieldConfig?.type === 'select' && (
