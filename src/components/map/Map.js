@@ -89,6 +89,9 @@ export default function Map({ user }) {
                   {spot.is_lit && <span className="bg-gray-100 px-2 py-0.5 rounded text-xs">💡</span>}
                   {spot.is_covered && <span className="bg-gray-100 px-2 py-0.5 rounded text-xs">🌧️</span>}
                 </div>
+                <a href={'/spot/' + spot.id} className="block mt-2 text-blue-500 underline font-medium text-xs">
+                  Vedi dettagli →
+                </a>
               </div>
             </Popup>
           </Marker>
