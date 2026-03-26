@@ -1,10 +1,12 @@
 'use client'
 
 import CommentSection from '@/components/comment/CommentSection'
+import CorrectionForm from '@/components/comment/CorrectionForm'
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
+
 
 const BADGES = [
   { key: 'has_fountain', label: '💧 Fontanella' },
@@ -19,7 +21,7 @@ export default function SpotPage() {
   const [avgRating, setAvgRating] = useState(null)
   const [totalVotes, setTotalVotes] = useState(0)
   const [loading, setLoading] = useState(true)
-
+  const [user, setUser] = useState(null)
   useEffect(() => {
     loadSpot()
   }, [id])
@@ -36,6 +38,9 @@ export default function SpotPage() {
       .select('*')
       .eq('spot_id', id)
       .single()
+
+    const { data: { user } } = await supabase.auth.getUser()
+        setUser(user)
 
     setSpot(spotData)
     if (popularity) {
@@ -116,6 +121,12 @@ export default function SpotPage() {
             </a>
         </div>
 
+
+        {user && (
+        <div className="mb-6">
+            <CorrectionForm spot={spot} user={user} />
+        </div>
+        )}
         <CommentSection spotId={id} />
 
       </div>
