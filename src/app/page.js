@@ -29,7 +29,9 @@ export default function Home() {
         <nav className="flex gap-4 text-sm items-center">
           {user ? (
             <>
-              <span className="text-zinc-400">Ciao, {user.user_metadata?.username}</span>
+              <a href="/profile" className="text-zinc-400 hover:text-white text-sm">
+                Ciao, {user.user_metadata?.username}
+              </a>
               <a href="/admin" className="text-zinc-400 hover:text-white text-sm">Admin</a>
               <button onClick={handleLogout} className="hover:underline">Esci</button>
             </>
