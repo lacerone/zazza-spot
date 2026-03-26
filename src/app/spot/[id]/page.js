@@ -1,5 +1,6 @@
 'use client'
 
+import CommentSection from '@/components/comment/CommentSection'
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
 import { useParams } from 'next/navigation'
@@ -115,10 +116,7 @@ export default function SpotPage() {
             </a>
         </div>
 
-        <div className="bg-zinc-900 rounded-2xl p-5">
-          <h2 className="text-white font-bold text-lg mb-2">💬 Commenti</h2>
-          <p className="text-zinc-500 text-sm">I commenti arrivano presto...</p>
-        </div>
+        <CommentSection spotId={id} />
 
       </div>
     </div>
