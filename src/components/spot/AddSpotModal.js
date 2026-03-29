@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import { supabase } from '@/lib/supabase'
@@ -134,7 +135,12 @@ export default function AddSpotModal({ lat, lng, spots = [], onClose, onSaved })
 
         {error && (
           <div className="bg-red-500/10 border border-red-500 text-red-400 rounded-lg px-4 py-3 mb-4 text-sm">
-            {error}
+            <p>{error}</p>
+            {error.includes('loggato') && (
+              <p className="mt-2 text-xs text-red-100">
+                Per continuare, <Link href="/login" className="underline font-semibold text-white">accedi</Link> o <Link href="/register" className="underline font-semibold text-white">registrati</Link>.
+              </p>
+            )}
           </div>
         )}
 

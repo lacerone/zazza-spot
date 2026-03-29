@@ -34,6 +34,7 @@ function MapTracker({ onMove }) {
 export default function Map({ user }) {
   const [modal, setModal] = useState(null)
   const [saved, setSaved] = useState(false)
+  const [authNotice, setAuthNotice] = useState('')
   const [allSpots, setAllSpots] = useState([])
   const [spots, setSpots] = useState([])
   const [mapCenter, setMapCenter] = useState([45.0703, 7.6869])
@@ -92,17 +93,19 @@ export default function Map({ user }) {
 
   const handleMapClick = (lat, lng) => {
     if (!user) {
-      alert('Devi essere loggato per aggiungere uno spot!')
+      setAuthNotice('Per aggiungere uno spot devi essere loggato. Vai su Accedi o Registrati per contribuire alla comunità.')
       return
     }
+    setAuthNotice('')
     setModal({ lat, lng })
   }
 
   const handleAddSpot = () => {
     if (!user) {
-      alert('Devi essere loggato per aggiungere uno spot!')
+      setAuthNotice('Per aggiungere uno spot devi essere loggato. Vai su Accedi o Registrati per contribuire alla comunità.')
       return
     }
+    setAuthNotice('')
     setModal({ lat: mapCenter[0], lng: mapCenter[1] })
   }
 
@@ -117,6 +120,13 @@ export default function Map({ user }) {
       {saved && (
         <div className="absolute top-4 left-1/2 -translate-x-1/2 z-[9999] bg-emerald-500/95 text-black px-6 py-3 rounded-full font-semibold shadow-2xl border border-emerald-300/40">
           ✅ Spot inviato! Aspetta l'approvazione dell'admin.
+        </div>
+      )}
+
+      {authNotice && (
+        <div className="absolute top-20 left-1/2 -translate-x-1/2 z-[9999] bg-yellow-500/95 text-black px-6 py-3 rounded-full font-semibold shadow-2xl border border-yellow-300/40">
+          {authNotice} {' '}
+          <a href="/login" className="underline font-black">Accedi</a> / <a href="/register" className="underline font-black">Registrati</a>
         </div>
       )}
 
